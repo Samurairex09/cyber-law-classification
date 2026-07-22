@@ -3,6 +3,7 @@ uvicorn
 pydantic
 numpy
 scikit-learn
+xgboost
 joblib
 reportlab
 streamlit

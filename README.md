@@ -1,18 +1,18 @@
 # Cyber Law Classification System
 
-A cyber incident classification tool that takes network traffic features, predicts the type of attack using a trained Random Forest model, and maps the prediction to the relevant section of India's IT Act (2000) — including the applicable penalty. Incidents are logged to a local database and can be exported as PDF reports.
+A cyber incident classification tool that takes network traffic features, predicts the type of attack using a trained XGBoost model, and maps the prediction to the relevant section of India's IT Act (2000) — including the applicable penalty. Incidents are logged to a local database and can be exported as PDF reports.
 
 ## How it works
 
 1. Network traffic features (protocol, service, state, byte/packet counts, timing stats, etc.) are submitted to the API.
-2. A Random Forest classifier (trained on the UNSW-NB15 dataset) predicts the attack category — e.g. Fuzzers, DoS, Backdoor, Exploits, Reconnaissance, Shellcode, Worms, or "no offence."
+2. An XGBoost classifier (trained on the UNSW-NB15 dataset) predicts the attack category — e.g. Fuzzers, DoS, Backdoor, Exploits, Reconnaissance, Shellcode, Worms, or "no offence."
 3. The prediction is mapped to the corresponding IT Act section and penalty.
 4. The incident is stored in SQLite (`incidents.db`), viewable, editable, and deletable via the API.
 5. A formatted PDF incident report can be generated on demand.
 
 ## Stack
 
-- **Backend:** FastAPI, scikit-learn (via `joblib`), NumPy
+- **Backend:** FastAPI, XGBoost + scikit-learn (via `joblib`), NumPy
 - **Frontend:** Streamlit
 - **Storage:** SQLite
 - **Reporting:** ReportLab (PDF generation)
@@ -23,7 +23,7 @@ A cyber incident classification tool that takes network traffic features, predic
 ```
 main.py          FastAPI backend — prediction, incident CRUD, PDF report generation
 app.py           Streamlit frontend
-rf_model.pkl     Trained Random Forest classifier
+rf_model.pkl     Trained XGBoost classifier (filename kept from an earlier RF iteration)
 label_encoder.pkl, ord_encoder.pkl   Encoders for model input/output
 incidents.db     SQLite database of logged incidents
 UNSW_NB15_testing-set.csv, test_sample.csv   Reference/test data
